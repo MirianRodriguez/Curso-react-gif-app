@@ -1,22 +1,23 @@
-import { useState } from "react"
+import { useState } from "react";
+import PropTypes from "prop-types";
 
-//para poder usar onAddCategory se debe desestructurar con llaves o hacer props.onAddCategory
-export const AddCategory = ({onAddCategory}) => {
+//para poder usar onNewCategory se debe desestructurar con llaves o hacer props.onNewCategory
+export const AddCategory = ({onNewCategory}) => {
     const [inputValue, setInputValue] = useState('');
 
-    const onInputChange = (event) => {
-        setInputValue(event.target.value);
+    const onInputChange = ({target}) => {
+        setInputValue(target.value);
     }
 
     const onSubmit = (event) => {
         event.preventDefault();
         if(inputValue.trim().length<=1) return;
-        onAddCategory(inputValue.trim());
         setInputValue('');
+        onNewCategory(inputValue.trim());
     }
 
   return (
-    <form onSubmit={onSubmit}>
+    <form onSubmit={onSubmit} aria-label="form">
         <input type="text" 
         placeholder="Buscar gif"
         value={inputValue}
@@ -25,4 +26,8 @@ export const AddCategory = ({onAddCategory}) => {
         onChange={onInputChange}/>
     </form>
   )
+}
+
+AddCategory.propTypes = {
+    onNewCategory: PropTypes.func.isRequired,
 }
